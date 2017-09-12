@@ -42,12 +42,12 @@ const app  = {
         app.createListener(app.item.autocompleteInput, app.item.infoWindow, app.item.marker);
     },
 
-    createListener: function(autocomplete, detalleUbicacion, marker){
+    createListener: function(autocomplete, locationDetails, marker){
         autocomplete.addListener('place_changed', function() {
-            detalleUbicacion.close();
+            locationDetails.close();
             marker.setVisible(false);
             let place = autocomplete.getPlace();
-            app.placePosition(place, detalleUbicacion, marker);
+            app.placePosition(place, locationDetails, marker);
         });
     },
 
@@ -77,7 +77,7 @@ const app  = {
         alert('Tenemos un problema con encontrar tu ubicacion');
     },
 
-    placePosition: function(place, detalleUbicacion, marker){
+    placePosition: function(place, locationDetails, marker){
         if (!place.geometry) {
             // Error si no encuentra el lugar indicado
             window.alert("No encontramos el lugar que indicaste: '" + place.name + "'");
@@ -103,8 +103,8 @@ const app  = {
             ].join(' ');
         }
 
-        detalleUbicacion.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-        detalleUbicacion.open(app.item.map, marker);
+        locationDetails.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+        locationDetails.open(app.item.map, marker);
     },
 
     createMarker: function(map){
